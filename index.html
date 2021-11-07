@@ -1,0 +1,620 @@
+<!DOCTYPE HTML>
+<html>
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>DATA SISWA</title>
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+</head>
+
+<body>  
+<style>
+  @import url('https://fonts.googleapis.com/css?family=Montserrat:400,700&display=swap');
+
+*{
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  font-family: 'Montserrat', sans-serif;
+}
+body{
+  background: #00003d;
+  padding: 0 10px;
+}
+.wrapper{
+  max-width: 900px;
+  width: 100%;
+  background: #fff;
+  margin: 20px auto;
+  box-shadow: 1px 1px 2px rgba(0,0,0,0.125);
+  padding: 30px;
+}
+
+.wrapper .title{
+  font-size: 24px;
+  font-weight: 700;
+  margin-bottom: 25px;
+  color: #004705;
+  text-transform: uppercase;
+  text-align: center;
+}
+
+.wrapper .form{
+  width: 100%;
+}
+
+.wrapper .form .inputfield{
+  margin-bottom: 15px;
+  display: flex;
+  align-items: center;
+}
+
+.wrapper .form .inputfield label{
+   width: 200px;
+   color: #757575;
+   margin-right: 10px;
+  font-size: 14px;
+}
+
+.wrapper .form .inputfield .input,
+.wrapper .form .inputfield .textarea{
+  width: 100%;
+  outline: none;
+  border: 1px solid #d5dbd9;
+  font-size: 15px;
+  padding: 8px 10px;
+  border-radius: 3px;
+  transition: all 0.3s ease;
+}
+
+.wrapper .form .inputfield .textarea{
+  width: 100%;
+  height: 60px;
+  resize: none;
+}
+
+.wrapper .form .inputfield .custom_select{
+  position: relative;
+  width: 100%;
+  height: 37px;
+}
+
+.wrapper .form .inputfield .custom_select:before{
+  content: "";
+  position: absolute;
+  top: 12px;
+  right: 10px;
+  border: 8px solid;
+  border-color: #d5dbd9 transparent transparent transparent;
+  pointer-events: none;
+}
+
+.wrapper .form .inputfield .custom_select select{
+  -webkit-appearance: none;
+  -moz-appearance:   none;
+  appearance:        none;
+  outline: none;
+  width: 100%;
+  height: 100%;
+  border: 0px;
+  padding: 8px 10px;
+  font-size: 15px;
+  border: 1px solid #d5dbd9;
+  border-radius: 3px;
+}
+
+
+.wrapper .form .inputfield .input:focus,
+.wrapper .form .inputfield .textarea:focus,
+.wrapper .form .inputfield .custom_select select:focus{
+  border: 1px solid #fec107;
+}
+
+.wrapper .form .inputfield p{
+   font-size: 14px;
+   color: #757575;
+}
+.wrapper .form .inputfield .check{
+  width: 15px;
+  height: 15px;
+  position: relative;
+  display: block;
+  cursor: pointer;
+}
+.wrapper .form .inputfield .check input[type="checkbox"]{
+  position: absolute;
+  top: 0;
+  left: 0;
+  opacity: 0;
+}
+.wrapper .form .inputfield .check .checkmark{
+  width: 15px;
+  height: 15px;
+  border: 1px solid #fec107;
+  display: block;
+  position: relative;
+}
+.wrapper .form .inputfield .check .checkmark:before{
+  content: "";
+  position: absolute;
+  top: 1px;
+  left: 2px;
+  width: 5px;
+  height: 2px;
+  border: 2px solid;
+  border-color: transparent transparent #fff #fff;
+  transform: rotate(-45deg);
+  display: none;
+}
+.wrapper .form .inputfield .check input[type="checkbox"]:checked ~ .checkmark{
+  background: #0002c7;
+}
+
+.wrapper .form .inputfield .check input[type="checkbox"]:checked ~ .checkmark:before{
+  display: block;
+}
+
+.wrapper .form .inputfield .btn{
+  width: 100%;
+  padding: 8px 10px;
+  font-size: 15px; 
+  border: 0px;
+  background:  #002903;
+  color: #fff;
+  cursor: pointer;
+  border-radius: 3px;
+  outline: none;
+}
+
+.wrapper .form .inputfield .btn:hover{
+  background: #0002c7;
+}
+
+.wrapper .form .inputfield:last-child{
+  margin-bottom: 0;
+}
+
+@media (max-width:420px) {
+  .wrapper .form .inputfield{
+    flex-direction: column;
+    align-items: flex-start;
+  }
+  .wrapper .form .inputfield label{
+    margin-bottom: 5px;
+  }
+  .wrapper .form .inputfield.terms{
+    flex-direction: row;
+  }
+}
+</style>
+
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.0/jquery.min.js"></script>
+<script>
+  
+  var script_url = "https://script.google.com/macros/s/AKfycbyvyoc4FreERHCXOeluvSqRNGATS9Ctddfu03sIuhs7se6GFwAtqL0i1fKOrbVwciCPAA/exec";/////////////////
+  
+
+// tambah data
+  function insert_value() {
+    
+ $("#re").css("visibility","hidden");
+  document.getElementById("loader").style.visibility = "visible";
+ $('#mySpinner').addClass('spinner');
+
+ var id1= $("#id").val();
+ var nama= $("#nama").val();
+ var gender= $("#gender").val();
+ var kelas= $("#kelas").val();
+ var alamat= $("#alamat").val();
+ var email= $("#email").val();
+ var kontak= $("#kontak").val();//////////////////
+ 
+ var url = script_url+"?callback=ctrlq&kontak="+kontak+"&email="+email+"&alamat="+alamat+"&kelas="+kelas+"&gender="+gender+"&nama="+nama+"&id="+id1+"&action=insert";
+  
+    var request = jQuery.ajax({               
+      crossDomain: true,
+      url: url ,
+      method: "GET",
+      dataType: "jsonp"
+    });
+  }
+
+// perbaharui data
+  function update_value(){
+ $("#re").css("visibility","hidden");
+     document.getElementById("loader").style.visibility = "visible";
+ 
+ var id1= $("#id").val();
+ var nama= $("#nama").val();
+ var gender= $("#gender").val();
+ var kelas= $("#kelas").val();
+ var alamat= $("#alamat").val();
+ var email= $("#email").val();
+ var kontak= $("#kontak").val();//////////////////
+ 
+ var url = script_url+"?callback=ctrlq&kontak="+kontak+"&email="+email+"&alamat="+alamat+"&kelas="+kelas+"&gender="+gender+"&nama="+nama+"&id="+id1+"&action=update";
+ 
+    var request = jQuery.ajax({
+      crossDomain: true,
+      url: url ,
+      method: "GET",
+      dataType: "jsonp"
+    });
+  }
+
+//hapus data
+  function delete_value(){
+ $("#re").css("visibility","hidden");
+     document.getElementById("loader").style.visibility = "visible";
+  
+ $('#mySpinner').addClass('spinner');
+ var id1= $("#id").val();
+ var nama= $("#nama").val();
+ var gender= $("#gender").val();
+ var kelas= $("#kelas").val();
+ var alamat= $("#alamat").val();
+ var email= $("#email").val();
+ var kontak= $("#kontak").val();//////////////////
+ 
+ var url = script_url+"?callback=ctrlq&kontak="+kontak+"&email="+email+"&alamat="+alamat+"&kelas="+kelas+"&gender="+gender+"&nama="+nama+"&id="+id1+"&action=delete";
+
+    var request = jQuery.ajax({
+      crossDomain: true,
+      url: url ,
+      method: "GET",
+      dataType: "jsonp"
+    });
+  }
+
+
+  // print the returned data
+  function ctrlq(e) {
+ $("#re").html(e.result);
+ $("#re").css("visibility","visible");
+ read_value('');
+  }
+  
+function read_value(srch) {
+  
+    $("#re").css("visibility","hidden");
+    document.getElementById("loader").style.visibility = "visible";
+    var url = script_url+"?action=read";
+
+    $.getJSON(url, function (json) {
+ 
+// buat tabel yang menampilkan data
+        var table = document.createElement("table");
+        table.setAttribute("id", "myTable");
+        var header = table.createTHead();
+  var row = header.insertRow(0);     
+  var cell1 = row.insertCell(0);
+  var cell2 = row.insertCell(1);
+  var cell3 = row.insertCell(2);
+  var cell4 = row.insertCell(3);
+  var cell5 = row.insertCell(4);
+  var cell6 = row.insertCell(5);
+  var cell7 = row.insertCell(6);///////////////////
+  row.style.background = "#2722ff";
+ 
+  cell1.innerHTML = "<b>ID</b>";
+  cell2.innerHTML = "<b>Nama</b>";
+  cell3.innerHTML = "<b>Gender</b>";
+  cell4.innerHTML = "<b>Kelas</b>";
+  cell5.innerHTML = "<b>Alamat</b>";
+  cell6.innerHTML = "<b>Email</b>";
+  cell7.innerHTML = "<b>Kontak</b>";//////////////////
+        
+//        alert(json.records);
+     // masukkan data ke dalam tabel
+      if (srch!=''){
+        for (var i = 0; i < json.records.length; i++) {
+          
+          if(srch==json.records[i].ID){
+            tr = table.insertRow(-1);
+    var tabCell = tr.insertCell(-1);
+    tabCell.innerHTML = json.records[i].ID;
+    tabCell = tr.insertCell(-1);
+    tabCell.innerHTML = json.records[i].Nama;
+    tabCell = tr.insertCell(-1);
+    tabCell.innerHTML = json.records[i].Gender;
+    tabCell = tr.insertCell(-1);
+    tabCell.innerHTML = json.records[i].Kelas;
+    tabCell = tr.insertCell(-1);
+    tabCell.innerHTML = json.records[i].Alamat;
+    tabCell = tr.insertCell(-1);
+    tabCell.innerHTML = json.records[i].Email;
+    tabCell = tr.insertCell(-1);
+    tabCell.innerHTML = json.records[i].Kontak;//////////////////
+            }
+        }
+         $("#re").html("Informasi data siswa");
+        $("#re").css("visibility","visible");
+      } else {
+         for (var i = 0; i < json.records.length; i++) {
+           
+            tr = table.insertRow(-1);
+    var tabCell = tr.insertCell(-1);
+    tabCell.innerHTML = json.records[i].ID;
+    tabCell = tr.insertCell(-1);
+    tabCell.innerHTML = json.records[i].Nama;
+    tabCell = tr.insertCell(-1);
+    tabCell.innerHTML = json.records[i].Gender;
+    tabCell = tr.insertCell(-1);
+    tabCell.innerHTML = json.records[i].Kelas; 
+    tabCell = tr.insertCell(-1);
+    tabCell.innerHTML = json.records[i].Alamat;
+    tabCell = tr.insertCell(-1);
+    tabCell.innerHTML = json.records[i].Email;
+    tabCell = tr.insertCell(-1);
+    tabCell.innerHTML = json.records[i].Kontak;////////////////
+          }
+       }
+        
+        var divContainer = document.getElementById("showData");
+        divContainer.innerHTML = "";
+        divContainer.appendChild(table);
+        document.getElementById("loader").style.visibility = "hidden";
+     $("#re").css("visibility","visible");
+ 
+     $("#id").val("")
+     $("#nama").val("")
+     $("#gender").val("")
+     $("#kelas").val("")
+     $("#alamat").val("")
+     $("#email").val("")
+     $("#kontak").val("")
+      getData2Input();///////////////////
+    });
+ }
+//////////// Ketika data dalam tabel diklik
+ function getData2Input(){
+  var table = document.getElementById("myTable");
+  
+  if (table) {
+    for (var i = 0; i < table.rows.length; i++) {
+      table.rows[i].onclick = function() {
+        tableText(this);        
+      }
+    }
+  }
+}
+
+///////////////////Ekstrak data dari Spreadsheet dan tampilkan di kolom.
+
+function tableText(tableRow) {
+  var id = tableRow.childNodes[0].innerHTML;
+  var nama = tableRow.childNodes[1].innerHTML;
+  var gender = tableRow.childNodes[2].innerHTML;
+  var kelas = tableRow.childNodes[3].innerHTML;
+  var alamat = tableRow.childNodes[4].innerHTML;
+  var email = tableRow.childNodes[5].innerHTML;
+  var kontak = tableRow.childNodes[6].innerHTML;//////////
+  $("#id").val(id)
+  $("#nama").val(nama)
+  $("#gender").val(gender)
+  $("#kelas").val(kelas)  
+  $("#alamat").val(alamat)
+  $("#email").val(email)
+  $("#kontak").val(kontak)
+  
+}   
+  </script>
+
+</head>
+<body>
+
+<div class="wrapper">
+  <div class="img"style="text-align: center;margin-top: -15px;">
+  <img src="img/logo.png">
+  <p>SMA NEGERI 4 PPU</p>
+</div>
+    <div class="title">
+      DATA SISWA
+    </div>
+      <form name="google-sheet">
+    <div class="form">
+      <div class="title"style="color: #fff;font-size: 15px;background-color: navy;margin-top: -18px;">
+      <p>Form Input Data Siswa</p>
+    </div>
+      <div class="inputfield">
+    <input type = "number" name ="srchID" id="srchID" placeholder="Search by NISN"style="padding: 3px;width: 150px;background-color:  #F5F5DC;color: #000;font-weight: bold;">
+  </div>
+       <div class="inputfield">
+          <label>NISN</label>
+          <input type="number" id="id" name="id" class="input" placeholder="Masukan NISN"required>
+          <label>Nama</label>
+          <input type="text" id="nama" name="nama" class="input" placeholder="Ketikan nama siswa" required>
+       </div>
+
+        <div class="inputfield">
+          <label>Gender</label>
+          <select type="text" id="gender" name="gender" class="input"required>
+          <option>--Pilih Gender--</option>
+          <option>Laki-laki</option>
+          <option>Perempuan</option>
+        </select>
+          <label>Kelas</label>
+          <select type="text" id="kelas" name="kelas" class="input" required>
+            <option>--Pilih kelas--</option>
+            <option>X IPA 1</option>
+            <option>X IPA 2</option>
+            <option>X IPS 1</option>
+            <option>X IPS 2</option>
+            <option>X IPS 3</option>
+          </select>
+       </div>  
+
+      <div class="inputfield">
+          <label>Alamat</label>
+          <input type="text" id="alamat" name="alamat" class="input" placeholder="Masukan alamat" required>
+       </div> 
+      <div class="inputfield">
+          <label>Email</label>
+          <input type="email" id="email" name="email" class="input" placeholder="Masukan email" required>
+       </div> 
+        <div class="inputfield">
+          <label>Kontak</label>
+          <input type="number" id="kontak" name="kontak" class="input" placeholder="Masukan nomor telepon" required>
+       </div> 
+        <input type="button" style="background-color: green;width: 100%;height: 30px;font-weight: bold;color: #feff4e;margin-right: 5px;" onClick="insert_value()" value="SUBMIT DATA"></input>
+        <div align="center">
+          <br>
+         <div id="loader"style="margin-top: -18px;"></div>
+        <p id="re"></p>
+        <input type="button" style="color:#fff;background-color:maroon;font-weight: bold;height: 30px;"onclick="read_value($('#srchID').val())" value="Search Data"/>
+        <input type="button" style="color:#fff;background-color:#898a00;font-weight: bold;height: 30px;"onclick="read_value($('#srchID').val())" value="Read Data"/>
+        <input type="button"  style="background-color: blue;height: 30px;font-weight: bold;color: #fff;"onclick="update_value()" value="Update Data" />
+        <input type="button"  style="background-color: red;height: 30px;font-weight: bold;color: #fff;"onclick="delete_value()" value="Delete Data" />
+       </div>
+     </div>
+    </div>
+  </div>  
+  <div align="center">
+    <style>
+      body {
+  padding-top: 20px;
+  padding-bottom: 20px;
+}
+
+#draw-canvas {
+  border: 2px dotted #CCCCCC;
+  border-radius: 5px;
+  cursor: crosshair;
+}
+
+#draw-dataUrl {
+  width: 100%;
+}
+h3 {
+    margin: 10px 15px;
+}
+h1 {
+    margin: 10px 15px;
+}
+
+header {
+    background: #273B47;
+    height: 100%;
+    width: 100%;
+    padding: 0;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+section{
+    flex:1;
+}
+
+header {
+    color: white;
+    font-weight: 500;
+    padding-left: 15px;
+}
+
+
+.button {
+    background: #3071a9;
+    box-shadow: inset 0 -3px 0 rgba(0,0,0,.3);
+    font-size: 14px;
+    padding: 5px 10px;
+    border-radius: 5px;
+    margin: 0 15px;
+    text-decoration: none;
+    color: white;
+}
+
+.button:active {
+    transform: scale(0.9);
+}
+
+.contenedor {
+    width: 100%
+    margin: 5px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.instrucciones {
+    width: 90%;
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    align-items:center;
+    margin-bottom: 10px;
+}
+
+label {
+    margin: 0 15px;
+}
+
+footer {
+    background: #273B47;
+    color: white;
+    height: 100%;
+    width: 100%;
+    margin-top: 10px;
+    padding: 0;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+
+table,
+th,
+td {
+  margin: 10px 0;
+  border: solid 1px #333;
+  padding: 2px 4px;
+  font: 15px Verdana;
+}
+
+th {
+  font-weight: bold;
+}
+
+#loader {
+  border: 16px solid #f7ff32;
+  border-radius: 50%;
+  border-top: 16px solid blue;
+  border-bottom: 16px solid green;
+  width: 30px;
+  height: 30px;
+  -webkit-animation: spin 2s linear infinite;
+  animation: spin 2s linear infinite;
+  visibility: hidden;
+}
+
+@-webkit-keyframes spin {
+  0% {
+    -webkit-transform: rotate(0deg);
+  }
+  100% {
+    -webkit-transform: rotate(360deg);
+  }
+}
+
+@keyframes spin {
+  0% {
+    transform: rotate(0deg);
+  }
+  100% {
+    transform: rotate(360deg);
+  }
+}
+</style>
+
+  <!-- Memanggil loader-->
+    <div id="showData"style="color: #fff;"></div>
+    <div id="loader"></div>
+    <p id="re"></p>
+    <div id="showData"style="color: #fff;">
+    </div>
+</body>
+<div align="center"style="margin-top: -20px;color: #feff4e;font-weight: bold;">
+  <p>All rights reserved | JNC Edukasi 2021</p>
+</div>
+<html>
